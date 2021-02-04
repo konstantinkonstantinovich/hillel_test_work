@@ -1,6 +1,10 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
+
+from django.contrib.auth.views import LoginView
+from django.contrib.auth import login
+
 
 # Create your views here.
 from django.views.generic import CreateView
@@ -27,3 +31,13 @@ class RegistrationForm(CreateView):
             password=passw
         )
         return redirect(self.success_url)
+
+
+class LoginForm(LoginView):
+    model = User
+    template_name = "polls/login.html"
+    success_url = '/polls/success/'
+
+    def form_valid(self, form):
+        login(self.request, form.get_user())
+        return HttpResponseRedirect(self.success_url)
