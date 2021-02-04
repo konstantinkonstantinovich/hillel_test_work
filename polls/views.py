@@ -1,25 +1,23 @@
-import math
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import render
+from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView
+from django.contrib.auth import authenticate, login
 
-from django.http import HttpResponseRedirect
-from django.shortcuts import get_object_or_404, redirect, render
-from django.urls import reverse
-from django.utils import timezone
-from django.views import generic
+# Create your views here.
 
-from polls.forms import HypotenuseFrom, MyPersonModelForm, ReminderForm
 
-from .models import Choice, MyPerson, Question
-from .tasks import send_date_reminder
+def success(request):
+    return HttpResponse("SUCCESS!!!")
 
-class IndexView(generic.ListView):
-    template_name = '../templates/polls/index.html'
-    context_object_name = 'latest_question_list'
 
-    def get_queryset(self):
-        """
-        Return the last five published questions (not including those set to be
-        published in the future).
-        """
-        return Question.objects.filter(
-            pub_date__lte=timezone.now()
-        ).order_by('-pub_date')[:5]
+class LoginForm(LoginView):
+    model = User
+    template_name = "polls/login.html"
+    success_url = '/polls/success/'
+
+    def form_valid(self, form):
+        """Security check complete. Log the user in."""
+        login(self.request, form.get_user())
+        return HttpResponseRedirect(self.get_success_url())
+
