@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.contrib.auth import login
 
+from .models import Post
 
 # Create your views here.
 from django.views.generic import CreateView
@@ -41,3 +42,4 @@ class LoginForm(LoginView):
     def form_valid(self, form):
         login(self.request, form.get_user())
         return HttpResponseRedirect(self.success_url)
+
