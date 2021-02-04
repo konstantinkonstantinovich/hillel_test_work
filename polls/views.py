@@ -21,15 +21,7 @@ class LoginForm(LoginView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class LogoutForm(LogoutView):
-    model = User
-    template_name = "polls/logout.html"
-    success_url = '/polls/success/'
-
-    def form_valid(self, form):
-        """Security check complete. Log the user in."""
-
-        logout(self.request)
-
-        return HttpResponseRedirect(self.success_url)
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect('/polls/success/')
 
