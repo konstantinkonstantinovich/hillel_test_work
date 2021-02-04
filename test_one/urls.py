@@ -25,5 +25,6 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += [
         path('__debug__/', include(debug_toolbar.urls)),
+        path('polls/', include('polls.urls')),
         path('silk/', include('silk.urls', namespace='silk')),
     ]
