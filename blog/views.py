@@ -2,11 +2,12 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
+from django.urls import reverse
 from django.views.generic import CreateView, DetailView
 from django.views.generic.list import ListView
 
-from .models import Post
+from .models import Post, Comments
 
 # Create your views here.
 
@@ -31,7 +32,7 @@ def success(request):
 
 class LoginForm(LoginView):
     model = User
-    template_name = "blog/login.html"
+    template_name = "registration/login.html"
     success_url = '/blog/success/'
 
     def form_valid(self, form):
@@ -47,9 +48,9 @@ def logout_view(request):
 
 class RegistrationForm(CreateView):
     model = User
-    template_name = "blog/registration.html"
+    template_name = "registration/registration.html"
     fields = ['username', 'email', 'password']
-    success_url = '/blog/success/'
+    success_url = '/blog/login/'
 
     def form_valid(self, form):
         """Security check complete. Log the user in."""
@@ -75,6 +76,16 @@ class PostDetailView(DetailView):
 
 
 class PostListView(ListView):
-
     model = Post
     paginate_by = 10
+
+
+class CommentsCreteViews(CreateView):
+    model = Comments
+    fields = ['comment']
+    success_url = '/blog/'
+
+    def form_valid(self, form):
+        form.instance.post = get_object_or_404(Post, pk=self.kwargs['pk'])
+        return super(CommentsCreteViews, self).form_valid(form)
+

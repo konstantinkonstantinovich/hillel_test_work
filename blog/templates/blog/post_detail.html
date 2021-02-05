@@ -5,5 +5,10 @@
     <body>
         <p><strong>Text:</strong> {{ object.text }}</p>
         <p><strong>Date of publishing:</strong> {{ object.publishing_data }}</p>
+        <h2>Comments</h2>
+        {% for comment in post.comments_set.all %}
+            <hr> Anon: {{ comment.comment }} - {{ comment.pub_data }}
+        {% endfor %}
+        <hr><p><a href="{% url 'blog:post-comments' post.pk %}">Add a new comment</a></p>
     </body>
 {% endblock %}
