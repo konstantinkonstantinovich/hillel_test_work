@@ -21,9 +21,9 @@ from django.urls import include, path
 from django.views.generic import RedirectView
 
 urlpatterns = [
-    path('', RedirectView.as_view(url='/polls/', permanent=True)),
+    path('', RedirectView.as_view(url='/blog/', permanent=True)),
     path('admin/', admin.site.urls),
-    path('polls/', include('polls.urls')),
+    path('blog/', include('blog.urls')),
 ]
 if settings.DEBUG:
     urlpatterns += [

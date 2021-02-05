@@ -1,10 +1,8 @@
-from django.urls import include
-
 from django.urls import path
 
 from . import views
 
-app_name = 'polls'
+app_name = 'blog'
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -12,4 +10,7 @@ urlpatterns = [
     path('login/', views.LoginForm.as_view(), name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('registrate/', views.RegistrationForm.as_view(), name='registrate'),
+    path('create/post/', views.PostCreateView.as_view(), name='post-create'),
+    path('post/', views.PostListView.as_view(), name='post-list'),
+    path('post/<int:pk>', views.PostDetailView.as_view(), name='post-detail'),
 ]

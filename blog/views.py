@@ -1,10 +1,12 @@
-from django.http import HttpResponseRedirect, HttpResponse
-from django.contrib.auth.models import User
-from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import login, logout
-from django.views.generic import CreateView
+from django.contrib.auth.models import User
+from django.contrib.auth.views import LoginView
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render
+from django.views.generic import CreateView, DetailView
+from django.views.generic.list import ListView
 
+from .models import Post
 
 # Create your views here.
 
@@ -29,8 +31,8 @@ def success(request):
 
 class LoginForm(LoginView):
     model = User
-    template_name = "polls/login.html"
-    success_url = '/polls/success/'
+    template_name = "blog/login.html"
+    success_url = '/blog/success/'
 
     def form_valid(self, form):
         """Security check complete. Log the user in."""
@@ -40,14 +42,14 @@ class LoginForm(LoginView):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect('/polls/success/')
+    return HttpResponseRedirect('/blog/success/')
 
 
 class RegistrationForm(CreateView):
     model = User
-    template_name = "polls/registration.html"
+    template_name = "blog/registration.html"
     fields = ['username', 'email', 'password']
-    success_url = '/polls/success/'
+    success_url = '/blog/success/'
 
     def form_valid(self, form):
         """Security check complete. Log the user in."""
@@ -60,3 +62,19 @@ class RegistrationForm(CreateView):
             password=passw
         )
         return redirect(self.success_url)
+
+
+class PostCreateView(CreateView):
+    model = Post
+    fields = ['title', 'text', 'author']
+    success_url = '/blog/'
+
+
+class PostDetailView(DetailView):
+    model = Post
+
+
+class PostListView(ListView):
+
+    model = Post
+    paginate_by = 10

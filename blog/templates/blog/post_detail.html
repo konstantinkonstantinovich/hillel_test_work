@@ -1,0 +1,9 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>{{ object.title }}</h1>
+    <body>
+        <p><strong>Text:</strong> {{ object.text }}</p>
+        <p><strong>Date of publishing:</strong> {{ object.publishing_data }}</p>
+    </body>
+{% endblock %}
