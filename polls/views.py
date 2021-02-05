@@ -3,8 +3,24 @@ from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
 from django.contrib.auth import login, logout
 from django.views.generic import CreateView
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
+
+
 # Create your views here.
+
+
+def index(request):
+    num_users = User.objects.count()
+    num_visits = request.session.get('num_visits', 0)
+    request.session['num_visits'] = num_visits + 1
+    return render(
+        request,
+        'index.html',
+        context={
+            'num_users': num_users,
+            'num_visits': num_visits
+        },
+    )
 
 
 def success(request):
