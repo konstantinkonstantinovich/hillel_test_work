@@ -3,8 +3,9 @@
 {% block content %}
   <h1>{{ object.title }}</h1>
     <body>
-        <p><strong>Text:</strong> {{ object.text }}</p>
-        <p><strong>Date of publishing:</strong> {{ object.publishing_data }}</p>
+        <p style="font-size: 20px"><strong>Text:</strong></p>
+        <p style="white-space: pre-wrap"> {{ object.text }}</p>
+        <p style="font-size: 20px"><strong>Date of publishing:</strong> {{ object.publishing_data }}</p>
         <h2>Comments</h2>
         {% for comment in post.comments_set.all %}
             <hr> Anon: {{ comment.comment }} - {{ comment.pub_data }}

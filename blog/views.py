@@ -1,10 +1,12 @@
 from django.contrib.auth import login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render, get_object_or_404
-from django.urls import reverse
-from django.views.generic import CreateView, DetailView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import CreateView, DetailView, UpdateView
 from django.views.generic.list import ListView
 
 from .models import Post, Comments
@@ -33,7 +35,7 @@ def success(request):
 class LoginForm(LoginView):
     model = User
     template_name = "registration/login.html"
-    success_url = '/blog/success/'
+    success_url = '/blog/'
 
     def form_valid(self, form):
         """Security check complete. Log the user in."""
@@ -65,17 +67,17 @@ class RegistrationForm(CreateView):
         return redirect(self.success_url)
 
 
-class PostCreateView(CreateView):
+class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
     fields = ['title', 'text', 'author']
     success_url = '/blog/'
 
 
-class PostDetailView(DetailView):
+class PostDetailView(LoginRequiredMixin, DetailView):
     model = Post
 
 
-class PostListView(ListView):
+class PostListView(LoginRequiredMixin, ListView):
     model = Post
     paginate_by = 10
 
@@ -89,3 +91,22 @@ class CommentsCreteViews(CreateView):
         form.instance.post = get_object_or_404(Post, pk=self.kwargs['pk'])
         return super(CommentsCreteViews, self).form_valid(form)
 
+
+class UserProfileView(LoginRequiredMixin, DetailView):
+    model = User
+    template_name = 'blog/userprofile_detail.html'
+
+    def get_object(self, queryset=None):
+        user = self.request.user
+        return user
+
+
+class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
+    model = User
+    success_url = '/blog/'
+    fields = ['first_name', 'last_name', 'password', 'email']
+    template_name = "blog/userprofile_update.html"
+
+    def get_object(self, queryset=None):
+        user = self.request.user
+        return user

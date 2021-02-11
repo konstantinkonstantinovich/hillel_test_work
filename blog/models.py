@@ -14,7 +14,8 @@ class Post(models.Model):
 
 
 class Comments(models.Model):
-    comment = models.TextField(max_length=10000, help_text="Input your comment.")
+    comment = models.TextField(max_length=10000,
+                               help_text="Input your comment.")
     post = models.ForeignKey(Post,
                              on_delete=models.CASCADE)
     pub_data = models.DateTimeField(auto_now_add=True)

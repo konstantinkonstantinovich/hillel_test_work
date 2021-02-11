@@ -1,0 +1,11 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>{{ object.username }}</h1>
+    <body>
+        <p><strong>First name:</strong> {{ object.first_name }}</p>
+        <p><strong>Last name:</strong> {{ object.last_name }}</p>
+        <p><strong>Email: </strong> {{ object.email }}</p>
+        <hr><p><a href="{% url 'user-update' user.id %}">Update profile</a></p>
+    </body>
+{% endblock %}

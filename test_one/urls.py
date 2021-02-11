@@ -20,11 +20,15 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import RedirectView
 
+from blog.views import UserProfileUpdateView, UserProfileView
+
 urlpatterns = [
     path('', RedirectView.as_view(url='/blog/', permanent=True)),
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/user/', UserProfileView.as_view(), name='user-detail'),
+    path('accounts/user_update/<int:id>', UserProfileUpdateView.as_view(), name='user-update'),
 ]
 if settings.DEBUG:
     urlpatterns += [
