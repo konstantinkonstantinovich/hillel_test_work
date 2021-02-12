@@ -51,7 +51,7 @@ def logout_view(request):
 class RegistrationForm(CreateView):
     model = User
     template_name = "registration/registration.html"
-    fields = ['username', 'email', 'password']
+    fields = ['username', 'email', 'password', 'first_name', 'last_name']
     success_url = '/blog/login/'
 
     def form_valid(self, form):
@@ -59,27 +59,46 @@ class RegistrationForm(CreateView):
         user = form.cleaned_data['username']
         fake_email = form.cleaned_data['email']
         passw = form.cleaned_data['password']
+        first_name = form.cleaned_data['first_name']
+        last_name = form.cleaned_data['last_name']
         User.objects.create_user(
             username=user,
             email=fake_email,
-            password=passw
+            password=passw,
+            first_name=first_name,
+            last_name=last_name,
         )
         return redirect(self.success_url)
 
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'text', 'author']
+    fields = ['title', 'text', 'description', 'image']
     success_url = '/blog/'
 
+    def form_valid(self, form):
+        user = self.request.user
+        title = form.cleaned_data['title']
+        text = form.cleaned_data['text']
+        description = form.cleaned_data['description']
+        image = form.cleaned_data['image']
+        Post.objects.create(author=user,
+                            title=title,
+                            text=text,
+                            description=description,
+                            image=image
+        )
+        return redirect(self.success_url)
 
-class PostDetailView(LoginRequiredMixin, DetailView):
+
+class PostDetailView(DetailView):
     model = Post
+    paginate_by = 2
 
 
-class PostListView(LoginRequiredMixin, ListView):
+class PostListView(ListView):
     model = Post
-    paginate_by = 1
+    paginate_by = 2
 
 
 class CommentsCreteViews(CreateView):
@@ -89,6 +108,7 @@ class CommentsCreteViews(CreateView):
 
     def form_valid(self, form):
         form.instance.post = get_object_or_404(Post, pk=self.kwargs['pk'])
+        form.instance.author = self.request.user
         return super(CommentsCreteViews, self).form_valid(form)
 
 

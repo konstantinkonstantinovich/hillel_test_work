@@ -2,14 +2,18 @@
 
 {% block content %}
   <h1>{{ object.title }}</h1>
-    <body>
-        <p style="font-size: 20px"><strong>Text:</strong></p>
+    {% load static %}
+        <p style="font-size: 22px"><strong>Description:</strong></p>
+        <p style="white-space: pre-wrap"> {{ object.description }}</p>
+        {% if object.image %}
+            <img src="{{ object.image.url }}" alt="connect" style="max-height:300px">
+        {% endif %}
+        <p style="font-size: 22px"><strong>Text:</strong></p>
         <p style="white-space: pre-wrap"> {{ object.text }}</p>
-        <p style="font-size: 20px"><strong>Date of publishing:</strong> {{ object.publishing_data }}</p>
+        <p style="font-size: 22px"><strong>Date of publishing:</strong> {{ object.publishing_data }}</p>
         <h2>Comments</h2>
         {% for comment in post.comments_set.all %}
-            <hr> Anon: {{ comment.comment }} - {{ comment.pub_data }}
+            <hr> <a href="{% url 'user-detail' %}" >{{ comment.author.username }}:</a> {{ comment.comment }} - {{ comment.pub_data }}
         {% endfor %}
         <hr><p><a href="{% url 'blog:post-comments' post.pk %}">Add a new comment</a></p>
-    </body>
 {% endblock %}
