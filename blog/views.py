@@ -79,7 +79,7 @@ class PostDetailView(LoginRequiredMixin, DetailView):
 
 class PostListView(LoginRequiredMixin, ListView):
     model = Post
-    paginate_by = 10
+    paginate_by = 1
 
 
 class CommentsCreteViews(CreateView):
