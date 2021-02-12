@@ -130,3 +130,5 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     def get_object(self, queryset=None):
         user = self.request.user
         return user
+
+
