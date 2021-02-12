@@ -83,7 +83,7 @@ class PostDetailView(DetailView):
 
 class PostListView(ListView):
     model = Post
-    paginate_by = 10
+    paginate_by = 1
 
 
 class CommentsCreteViews(CreateView):
