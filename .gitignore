@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+static
+uploads
+media
+
 # C extensions
 *.so
 .idea
