@@ -73,17 +73,32 @@ class RegistrationForm(CreateView):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'text', 'author', 'description', 'image']
+    fields = ['title', 'text', 'description', 'image']
     success_url = '/blog/'
+
+    def form_valid(self, form):
+        user = self.request.user
+        title = form.cleaned_data['title']
+        text = form.cleaned_data['text']
+        description = form.cleaned_data['description']
+        image = form.cleaned_data['image']
+        Post.objects.create(author=user,
+                            title=title,
+                            text=text,
+                            description=description,
+                            image=image
+        )
+        return redirect(self.success_url)
 
 
 class PostDetailView(DetailView):
     model = Post
+    paginate_by = 2
 
 
 class PostListView(ListView):
     model = Post
-    paginate_by = 1
+    paginate_by = 2
 
 
 class CommentsCreteViews(CreateView):
