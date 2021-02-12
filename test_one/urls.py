@@ -17,12 +17,13 @@ import debug_toolbar
 
 from django.conf import settings
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 from django.views.generic import RedirectView
 
 from blog.views import UserProfileUpdateView, UserProfileView
 
 urlpatterns = [
+    re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
     path('', RedirectView.as_view(url='/blog/', permanent=True)),
     path('admin/', admin.site.urls),
     path('blog/', include('blog.urls')),

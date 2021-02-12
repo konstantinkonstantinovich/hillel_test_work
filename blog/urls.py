@@ -1,10 +1,11 @@
-from django.urls import path
+from django.urls import path, include,re_path
 
 from . import views
 
 app_name = 'blog'
 
 urlpatterns = [
+
     path('', views.index, name='index'),
     path('success/', views.success, name='success'),
     path('login/', views.LoginForm.as_view(), name='login'),
