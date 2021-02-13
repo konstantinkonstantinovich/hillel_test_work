@@ -132,3 +132,9 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
         return user
 
 
+class UserPostListView(LoginRequiredMixin, ListView):
+    model = User
+    paginate_by = 1
+    template_name = "blog/userpost_list.html"
+
+

@@ -7,5 +7,6 @@
         <p><strong>Last name:</strong> {{ object.last_name }}</p>
         <p><strong>Email: </strong> {{ object.email }}</p>
         <hr><p><a href="{% url 'user-update' user.id %}">Update profile</a></p>
+        <hr><p><a href=" {% url 'blog:user-post' user.id %} ">Post List</a></p>
     </body>
 {% endblock %}

@@ -15,4 +15,5 @@ urlpatterns = [
     path('post/', views.PostListView.as_view(), name='post-list'),
     path('post/<int:pk>', views.PostDetailView.as_view(), name='post-detail'),
     path('post/<int:pk>/comments/', views.CommentsCreteViews.as_view(), name='post-comments'),
+    path('user_post/<int:pk>', views.UserPostListView.as_view(), name='user-post')
 ]
