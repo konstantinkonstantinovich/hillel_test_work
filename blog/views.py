@@ -73,10 +73,11 @@ class RegistrationForm(CreateView):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'text', 'description', 'image']
+    fields = ['title', 'text', 'description', 'image', 'status']
     success_url = '/blog/'
 
     def form_valid(self, form):
+        status = Post.LoanStatus.IS_PUBLISHED
         user = self.request.user
         title = form.cleaned_data['title']
         text = form.cleaned_data['text']
@@ -86,7 +87,8 @@ class PostCreateView(LoginRequiredMixin, CreateView):
                             title=title,
                             text=text,
                             description=description,
-                            image=image
+                            image=image,
+                            status=status,
         )
         return redirect(self.success_url)
 

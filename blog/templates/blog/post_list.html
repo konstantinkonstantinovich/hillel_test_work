@@ -8,7 +8,11 @@
 <ul>
     {% for object in object_list %}
     <li>
-        <a href="{% url 'blog:post-detail' object.id %}">{{ object.title }} by {{ object.author }}</a>    - {{object.publishing_data}}
+        {% if object.status == 2 %}
+            <a href="{% url 'blog:post-detail' object.id %}">{{ object.title }} by {{ object.author }}</a>    - {{object.publishing_data}}
+        {% else %}
+            <p> No published post </p>
+        {% endif %}
     </li>
     {% endfor %}
 </ul>

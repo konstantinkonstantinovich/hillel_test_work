@@ -8,13 +8,18 @@
 <ul>
     {% for object in user.post_set.all %}
     <li>
-        <a href="{% url 'blog:post-detail' object.id %}"> {{ object.title }}</a>
+        {% if object.status == 2 %}
+            <a href="{% url 'blog:post-detail' object.id %}"> {{ object.title }} - {{ object.publishing_data }}</a>
+        {% else %}
+            <p> No published post </p>
+        {% endif %}
     </li>
     {% endfor %}
 </ul>
-{% else %}x
+{% else %}
     <p>No post yet.</p>
 {% endif %}
+    <hr><a href="{% url 'blog:post-create' %}">Publish Post</a><hr>
 <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}

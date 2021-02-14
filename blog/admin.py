@@ -15,9 +15,9 @@ class PostAdminForm(forms.ModelForm):
 
 @admin.register(Post)
 class PostModelAdmin(admin.ModelAdmin):
-    list_display = ["title", "text", "publishing_data", "author", "description"]
-    fields = ["title", "text", "author", "description"]
-    list_filter = ['author']
+    list_display = ["title", "text", "publishing_data", "author", "description", "status"]
+    fields = ["title", "text", "author", "description", "status"]
+    list_filter = ['author', 'status']
 
 
 @admin.register(Comments)
