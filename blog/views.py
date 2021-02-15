@@ -14,20 +14,6 @@ from .models import Post, Comments
 # Create your views here.
 
 
-def index(request):
-    num_users = User.objects.count()
-    num_visits = request.session.get('num_visits', 0)
-    request.session['num_visits'] = num_visits + 1
-    return render(
-        request,
-        'index.html',
-        context={
-            'num_users': num_users,
-            'num_visits': num_visits
-        },
-    )
-
-
 def success(request):
     return HttpResponse("SUCCESS!!!")
 
@@ -95,12 +81,17 @@ class PostCreateView(LoginRequiredMixin, CreateView):
 
 class PostDetailView(DetailView):
     model = Post
-    paginate_by = 2
 
 
 class PostListView(ListView):
+
     model = Post
-    paginate_by = 2
+    paginate_by = 15
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['num_users'] = User.objects.count()
+        return context
 
 
 class CommentsCreteViews(CreateView):
@@ -114,15 +105,6 @@ class CommentsCreteViews(CreateView):
         return super(CommentsCreteViews, self).form_valid(form)
 
 
-class UserProfileView(LoginRequiredMixin, DetailView):
-    model = User
-    template_name = 'blog/userprofile_detail.html'
-
-    def get_object(self, queryset=None):
-        user = self.request.user
-        return user
-
-
 class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     success_url = '/blog/'
@@ -132,6 +114,18 @@ class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     def get_object(self, queryset=None):
         user = self.request.user
         return user
+
+
+class UserProfileView(LoginRequiredMixin, DetailView):
+    model = User
+    template_name = 'blog/userprofile_detail.html'
+
+    def get_object(self, queryset=None):
+        user = self.request.user
+        return user
+
+    def get_queryset(self):
+        pass
 
 
 class UserPostListView(LoginRequiredMixin, ListView):

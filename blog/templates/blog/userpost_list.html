@@ -3,7 +3,7 @@
 
 {% block content %}
     <h1>User's post list</h1>
-
+    <hr><a href="{% url 'blog:post-create' %}">Publish Post</a><hr>
 {% if object_list %}
 <ul>
     {% for object in user.post_set.all %}
@@ -16,10 +16,6 @@
     </li>
     {% endfor %}
 </ul>
-{% else %}
-    <p>No post yet.</p>
-{% endif %}
-    <hr><a href="{% url 'blog:post-create' %}">Publish Post</a><hr>
 <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
@@ -37,4 +33,8 @@
         {% endif %}
     </span>
 </div>
+{% else %}
+    <p>No post yet.</p>
+{% endif %}
+
 {% endblock %}

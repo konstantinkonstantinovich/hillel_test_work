@@ -2,6 +2,17 @@
 
 
 {% block content %}
+
+<h1>Local Blog Home</h1>
+
+    <p>Welcome to <em>LocalBlog</em>, a very basic Django website developed as a tutorial example on the Mozilla Developer Network.</p>
+  <h2>Dynamic content</h2>
+
+  <p>The Blog has the following record users:</p>
+    <ul>
+        <li><strong>Users:</strong> {{ num_users }}</li>
+    </ul>
+
   <h1>Post list</h1>
 
 {% if object_list %}
@@ -16,9 +27,6 @@
     </li>
     {% endfor %}
 </ul>
-{% else %}
-    <p>No post now.</p>
-{% endif %}
 <div class="pagination">
     <span class="step-links">
         {% if page_obj.has_previous %}
@@ -36,4 +44,7 @@
         {% endif %}
     </span>
 </div>
+{% else %}
+    <p>No post now.</p>
+{% endif %}
 {% endblock %}

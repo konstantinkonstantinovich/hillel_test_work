@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 
+
 class Post(models.Model):
 
     class LoanStatus(models.IntegerChoices):
@@ -19,7 +20,7 @@ class Post(models.Model):
                                on_delete=models.CASCADE)
     publishing_data = models.DateTimeField(auto_now_add=True)
     description = models.TextField(max_length=1000, help_text="Enter a short description")
-    image = models.ImageField(upload_to='static/images')
+    image = models.ImageField(upload_to='static/images', blank=True)
 
     def __str__(self):
         return self.title
