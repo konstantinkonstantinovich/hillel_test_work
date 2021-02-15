@@ -9,10 +9,11 @@
             <img src="{{ object.image.url }}" alt="connect" style="max-height:300px">
         {% endif %}
         <p style="font-size: 22px"><strong>Text:</strong></p>
-{% autoescape off %}
-    {{ myhtml }}
-        {{ object.text}}
-{% endautoescape %}
+
+        {% autoescape off %}
+            {{ object.text}}
+        {% endautoescape %}
+
         <p style="font-size: 22px"><strong>Date of publishing:</strong> {{ object.publishing_data }}</p>
         <h2>Comments</h2>
         {% for comment in post.comments_set.all %}

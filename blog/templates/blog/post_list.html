@@ -18,13 +18,9 @@
 {% if object_list %}
 <ul>
     {% for object in object_list %}
-    <li>
         {% if object.status == 2 %}
-            <a href="{% url 'blog:post-detail' object.id %}">{{ object.title }} by {{ object.author }}</a>    - {{object.publishing_data}}
-        {% else %}
-            <p> No published post </p>
+            <p><a href="{% url 'blog:post-detail' object.id %}">{{ object.title }} by {{ object.author }}</a>    - {{object.publishing_data}}</p>
         {% endif %}
-    </li>
     {% endfor %}
 </ul>
 <div class="pagination">
