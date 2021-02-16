@@ -14,5 +14,7 @@ urlpatterns = [
     path('', views.PostListView.as_view(), name='post-list'),
     path('post/<int:pk>', views.PostDetailView.as_view(), name='post-detail'),
     path('post/<int:pk>/comments/', views.CommentsCreteViews.as_view(), name='post-comments'),
-    path('user_post/<int:pk>', views.UserPostListView.as_view(), name='user-post')
+    path('user_post/<int:pk>', views.UserPostListView.as_view(), name='user-post'),
+    path('blanks/', views.BlanksList.as_view(), name='blanks-list'),
+    path('blanks/<int:pk>/', views.BlanksUpdateForm.as_view(), name='blanks-update')
 ]
