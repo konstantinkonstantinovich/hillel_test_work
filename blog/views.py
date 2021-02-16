@@ -2,10 +2,8 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
-from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import redirect, render, get_object_or_404
-from django.urls import reverse, reverse_lazy
+from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.views.generic.list import ListView
 
@@ -63,7 +61,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     success_url = '/blog/'
 
     def form_valid(self, form):
-        status = Post.LoanStatus.IS_PUBLISHED
+        status = form.cleaned_data['status']
         user = self.request.user
         title = form.cleaned_data['title']
         text = form.cleaned_data['text']
@@ -124,9 +122,6 @@ class UserProfileView(LoginRequiredMixin, DetailView):
         user = self.request.user
         return user
 
-    def get_queryset(self):
-        pass
-
 
 class UserPostListView(LoginRequiredMixin, ListView):
     model = User
@@ -134,3 +129,20 @@ class UserPostListView(LoginRequiredMixin, ListView):
     template_name = "blog/userpost_list.html"
 
 
+class BlanksList(ListView):
+    model = Post
+    template_name = "blog/blanks_list.html"
+
+
+class BlanksUpdateForm(DetailView, UpdateView):
+    model = Post
+    fields = ['title', 'text', 'description', 'image', 'status']
+    template_name = 'blog/blanks_update.html'
+    success_url = '/blog/'
+
+    def form_valid(self, form):
+        form.instance.post = get_object_or_404(Post, pk=self.kwargs['pk'])
+        if Post.image is None:
+            image = form.cleaned_data['image']
+            Post.objects.create(image=image)
+        return super(BlanksUpdateForm, self).form_valid(form)

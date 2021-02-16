@@ -1,0 +1,14 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+    <h1>Blanks list</h1>
+    {% if object_list %}
+        {% for object in object_list %}
+            {% if object.status == 1 %}
+                <p><a href="{% url 'blog:blanks-update' object.id %}">{{ object.title }} by {{ object.author }}</a></p>
+            {% endif %}
+        {% endfor %}
+    {% else %}
+        <p>No post in blanks</p>
+    {% endif %}
+{% endblock %}
