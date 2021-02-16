@@ -125,13 +125,14 @@ class UserProfileView(LoginRequiredMixin, DetailView):
 
 class UserPostListView(LoginRequiredMixin, ListView):
     model = User
-    paginate_by = 1
+    paginate_by = 5
     template_name = "blog/userpost_list.html"
 
 
 class BlanksList(ListView):
     model = Post
     template_name = "blog/blanks_list.html"
+    paginate_by = 5
 
 
 class BlanksUpdateForm(DetailView, UpdateView):
