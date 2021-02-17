@@ -10,6 +10,7 @@ urlpatterns = [
     path('login/', views.LoginForm.as_view(), name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('registrate/', views.RegistrationForm.as_view(), name='registrate'),
+    path('password_update/', views.change_password, name='change-password'),
     path('create/post/', views.PostCreateView.as_view(), name='post-create'),
     path('', views.PostListView.as_view(), name='post-list'),
     path('post/<int:pk>', views.PostDetailView.as_view(), name='post-detail'),
