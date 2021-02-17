@@ -7,10 +7,8 @@
   <h1>Create post</h1>
 <form method="post" enctype="multipart/form-data">{% csrf_token %}
     {% bootstrap_form form %}
-    {% buttons %}
-        <button type="submit" class="btn btn-primary">
-            {% bootstrap_icon "star" %} Create
-        </button>
-    {% endbuttons %}
+    <button class="btn btn-lg" style="background-color:slategray;">
+        <i class="fa fa-pencil"></i> Create
+    </button>
 </form>
 {% endblock %}

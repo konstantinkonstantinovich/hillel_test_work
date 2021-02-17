@@ -130,7 +130,7 @@ class CommentsCreteViews(CreateView):
 class UserProfileUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     success_url = '/blog/'
-    fields = ['first_name', 'last_name', 'password', 'email']
+    fields = ['first_name', 'last_name', 'email']
     template_name = "blog/userprofile_update.html"
 
     def get_object(self, queryset=None):

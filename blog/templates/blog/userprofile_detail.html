@@ -1,16 +1,51 @@
 {% extends "base_generic.html" %}
-
+{% load crispy_forms_filters %}
 {% load bootstrap4 %}
 
 {% block content %}
-  <h1>{{ object.username }}</h1>
-    <body>
-        <p><strong>First name:</strong> {{ object.first_name }}</p>
-        <p><strong>Last name:</strong> {{ object.last_name }}</p>
-        <p><strong>Email: </strong> {{ object.email }}</p>
-        <hr><p><a href="{% url 'user-update' user.id %}">Update profile</a></p>
-        <hr><p><a href=" {% url 'blog:user-post' user.id %} ">Post List</a></p>
-        <hr><a href="{% url 'blog:post-create' %}">Publish Post</a><hr>
-        <a href="{% url 'blog:blanks-list'%}"> Blanks list</a>
-    </body>
+	{% load crispy_forms_tags %}
+
+	<!--User-->
+	<br><br>
+	<div class="container mx-auto">
+	    <div class="row">
+	    	<div class="col-sm-12 col-md-12 col-lg-3 pb-4">
+		    	<div class="card p-4">
+			    	<h4 class="card-title font-weight-bold text-center">Hello, {{ object.username|title }}</h4>
+			      	<hr>
+			    	<div class="card-text">
+			    		<p class="text-muted mb-0" style="font-size: 12px">Username:</p>
+			    		<p>{{ object.username }}</p>
+			    		<p class="text-muted mb-0" style="font-size: 12px">Name:</p>
+				  		<p>{{ object.first_name }} {{ user.last_name }}</p>
+				  		<p class="text-muted mb-0" style="font-size: 12px">Email:</p>
+				  		<p>{{ object.email }} </p>
+			        </div>
+		    	</div>
+		  	</div>
+		    <div class="col-sm-12 col-md-12 col-lg-9 pb-4">
+                <div class="row">
+		    		<div class="col-6 my-auto">
+		    			<h2 class="font-weight-bold pt-4">Menu</h2>
+                            <hr><p><a href="{% url 'user-update' user.id %}">Update profile</a></p>
+                            <hr><p><a href=" {% url 'blog:user-post' user.id %} ">Post List</a></p>
+                            <hr><a href="{% url 'blog:post-create' %}">Publish Post</a><hr>
+                            <a href="{% url 'blog:blanks-list'%}"> Blanks list</a>
+		    		</div>
+		    	</div>
+		      	<br>
+		    </div>
+		</div>
+	</div>
+
+	<div class="modal fade" tabindex="-1" id="profileModal" role="dialog">
+	  	<div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      	<div class="modal-header">
+			        <h5 class="modal-title">Edit Profile</h5>
+                </div>
+		    </div>
+	  	</div>
+	</div>
+
 {% endblock %}

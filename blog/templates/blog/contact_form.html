@@ -8,9 +8,9 @@
     {% csrf_token %}
     {{ form.as_p }}
     <div class="form-actions">
-              <button type="submit" class="btn btn-primary">
-            {% bootstrap_icon "star" %} Send
-        </button>
+    <button class="btn btn-lg" style="background-color:slategray;">
+        <i class="fa fa-pencil"></i> Create
+    </button>
     </div>
   </form>
 {% endblock %}

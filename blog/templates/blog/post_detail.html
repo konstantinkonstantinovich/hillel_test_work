@@ -15,7 +15,7 @@
         <!-- Author -->
         <p class="lead">
           by
-          <a href="{% url 'user-detail' %}">{{object.author}}</a>
+          <a href="{% url 'user-comment' object.author.pk %}">{{object.author}}</a>
         </p>
 
         <hr>
@@ -42,11 +42,13 @@
         {% endautoescape %}
 
         <!-- Comments Form -->
+
 <br>
 <br>
 <br>
 <h5>Comments:</h5>
 <hr>
+
         <!-- Comment -->
         <div class="media mb-4">
           <div class="media-body">
