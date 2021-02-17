@@ -1,6 +1,6 @@
 {% extends "base_generic.html" %}
 
-{% load bootstrap3 %}
+{% load bootstrap4 %}
 
 {% block content %}
 
@@ -8,9 +8,9 @@
     {% csrf_token %}
     {% bootstrap_form form %}
     {% buttons %}
-        <button type="submit" class="btn btn-primary">
-            {% bootstrap_icon "star" %} Submit
-        </button>
+<button class="btn btn-lg" style="background-color:slategray;">
+   <i class="fa fa-pencil"></i> Edit
+</button>
     {% endbuttons %}
 </form>
 

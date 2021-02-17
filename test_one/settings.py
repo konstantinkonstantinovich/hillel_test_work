@@ -51,7 +51,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
     'django_extensions',
-    'bootstrap3',
+    'bootstrap4',
+    'crispy_forms',
 ]
 
 if DEBUG:
@@ -59,6 +60,8 @@ if DEBUG:
         'debug_toolbar',
         'silk',
     ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
