@@ -17,7 +17,11 @@
         <p style="font-size: 22px"><strong>Date of publishing:</strong> {{ object.publishing_data }}</p>
         <h2>Comments</h2>
         {% for comment in post.comments_set.all %}
-            <hr> <a href="{% url 'user-detail' %}" >{{ comment.author.username }}:</a> {{ comment.comment }} - {{ comment.pub_data }}
+            {% if comment.author.username == '' %}
+                <hr> <a href="{% url 'user-detail' %}" > Anon:</a> {{ comment.comment }} - {{ comment.pub_data }}
+            {% else %}
+                <hr> <a href="{% url 'user-detail' %}" >{{ comment.author.username }}:</a> {{ comment.comment }} - {{ comment.pub_data }}
+            {% endif %}
         {% endfor %}
         <hr><p><a href="{% url 'blog:post-comments' post.pk %}">Add a new comment</a></p>
 {% endblock %}

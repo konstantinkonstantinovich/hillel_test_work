@@ -1,6 +1,6 @@
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, get_object_or_404
@@ -98,8 +98,14 @@ class CommentsCreteViews(CreateView):
     success_url = '/blog/'
 
     def form_valid(self, form):
+        a = self.request.user
+        print(a)
         form.instance.post = get_object_or_404(Post, pk=self.kwargs['pk'])
-        form.instance.author = self.request.user
+        if self.request.user == AnonymousUser:
+            form.instance.author = User.objects.get()
+        else:
+            form.instance.author = self.request.user
+
         return super(CommentsCreteViews, self).form_valid(form)
 
 
