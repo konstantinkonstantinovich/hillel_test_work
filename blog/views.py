@@ -1,13 +1,18 @@
+from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User, AnonymousUser
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import redirect, get_object_or_404
+from django.shortcuts import redirect, get_object_or_404, render
 from django.views.generic import CreateView, DetailView, UpdateView
+from django.views.generic.edit import FormView
+
 from django.views.generic.list import ListView, MultipleObjectMixin
 
 from .models import Post, Comments
+
+from .forms import ContactForm
 
 # Create your views here.
 
@@ -24,6 +29,7 @@ class LoginForm(LoginView):
     def form_valid(self, form):
         """Security check complete. Log the user in."""
         login(self.request, form.get_user())
+        messages.add_message(self.request, messages.SUCCESS, 'Authorization success!')
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -52,6 +58,7 @@ class RegistrationForm(CreateView):
             first_name=first_name,
             last_name=last_name,
         )
+        messages.add_message(self.request, messages.SUCCESS, 'Registration success!')
         return redirect(self.success_url)
 
 
@@ -74,6 +81,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
                             image=image,
                             status=status,
         )
+        messages.add_message(self.request, messages.SUCCESS, 'Post created!')
         return redirect(self.success_url)
 
 
@@ -160,4 +168,17 @@ class BlanksUpdateForm(DetailView, UpdateView):
         if Post.image is None:
             image = form.cleaned_data['image']
             Post.objects.create(image=image)
+        messages.add_message(self.request, messages.SUCCESS, 'Form updated success!')
         return super(BlanksUpdateForm, self).form_valid(form)
+
+
+class ContactFormView(FormView):
+    form_class = ContactForm
+    template_name = 'blog/contact_form.html'
+    success_url = '/blog/thanks'
+    fields = ['sender', 'message', 'subject']
+
+
+def thanks(request):
+    thanks = 'thanks'
+    return render(request, 'blog/thanks.html', {'thanks': thanks})

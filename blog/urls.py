@@ -16,5 +16,7 @@ urlpatterns = [
     path('post/<int:pk>/comments/', views.CommentsCreteViews.as_view(), name='post-comments'),
     path('user_post/<int:pk>', views.UserPostListView.as_view(), name='user-post'),
     path('blanks/', views.BlanksList.as_view(), name='blanks-list'),
-    path('blanks/<int:pk>/', views.BlanksUpdateForm.as_view(), name='blanks-update')
+    path('blanks/<int:pk>/', views.BlanksUpdateForm.as_view(), name='blanks-update'),
+    path('contact/', views.ContactFormView.as_view(), name='contact'),
+    path('thanks/', views.thanks, name='thanks')
 ]
