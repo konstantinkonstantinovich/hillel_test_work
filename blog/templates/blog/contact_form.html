@@ -1,12 +1,16 @@
 {% extends 'base_generic.html' %}
 
+{% load bootstrap3 %}
+
 {% block content %}
   <h1>Contact Us</h1>
   <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <div class="form-actions">
-      <button type="submit">Send</button>
+              <button type="submit" class="btn btn-primary">
+            {% bootstrap_icon "star" %} Send
+        </button>
     </div>
   </form>
 {% endblock %}

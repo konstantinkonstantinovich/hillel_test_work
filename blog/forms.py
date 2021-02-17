@@ -11,8 +11,8 @@ class ContactForm(forms.Form):
 
 
 class PostModelForm(forms.ModelForm):
-    text = forms.CharField(widget=CKEditorUploadingWidget())
-    description = forms.CharField(widget=CKEditorUploadingWidget())
+    text = forms.CharField(label='Text', widget=forms.Textarea(attrs={'class': 'ckeditor'}))
+    description = forms.CharField(label='Description', widget=forms.Textarea(attrs={'class': 'ckeditor'}))
 
     class Meta:
         model = Post

@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'blog.apps.BlogConfig',
     'django_extensions',
+    'bootstrap3',
 ]
 
 if DEBUG:
