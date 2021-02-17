@@ -68,6 +68,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     fields = ['title', 'text', 'description', 'image', 'status']
     success_url = '/blog/'
 
+
     def form_valid(self, form):
         status = form.cleaned_data['status']
         user = self.request.user
