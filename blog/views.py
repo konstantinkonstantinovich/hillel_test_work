@@ -1,6 +1,6 @@
 from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AnonymousUser
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, get_object_or_404
@@ -89,10 +89,7 @@ class PostDetailView(DetailView, MultipleObjectMixin):
         return context
 
 
-
-
 class PostListView(ListView):
-
     model = Post
     paginate_by = 15
 
@@ -110,7 +107,14 @@ class CommentsCreteViews(CreateView):
 
     def form_valid(self, form):
         form.instance.post = get_object_or_404(Post, pk=self.kwargs['pk'])
-        form.instance.author = self.request.user
+        if self.request.user.is_authenticated:
+            form.instance.author = self.request.user
+        else:
+            if User.objects.filter(username='anon').exists():
+                form.instance.author = User.objects.get(username='anon')
+            else:
+                User.objects.create(username='anon')
+                form.instance.author = User.objects.get(username='anon')
         return super(CommentsCreteViews, self).form_valid(form)
 
 
