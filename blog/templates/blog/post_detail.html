@@ -1,23 +1,82 @@
 {% extends "base_generic.html" %}
 
 {% block content %}
-  <h1>{{ object.title }}</h1>
-    {% load static %}
-        <p style="font-size: 22px"><strong>Description:</strong></p>
-        <p style="white-space: pre-wrap"> {{ object.description }}</p>
+  <!-- Page Content -->
+  <div class="container">
+
+    <div class="row">
+
+      <!-- Post Content Column -->
+      <div class="col-lg-8">
+
+        <!-- Title -->
+        <h1 class="mt-4">{{ object.title }}</h1>
+
+        <!-- Author -->
+        <p class="lead">
+          by
+          <a href="{% url 'user-detail' %}">{{object.author}}</a>
+        </p>
+
+        <hr>
+
+        <!-- Date/Time -->
+        <p>Posted on {{ object.publishing_data }}</p>
+
+        <hr>
+
+        <!-- Preview Image -->
         {% if object.image %}
-            <img src="{{ object.image.url }}" alt="connect" style="max-height:300px">
+            <img class="img-fluid rounded" src="{{ object.image.url }}" alt="connect" style="max-height:300px">
+        <hr>
         {% endif %}
-        <p style="font-size: 22px"><strong>Text:</strong></p>
+
+
+
+
+        <!-- Post Content -->
+        <p class="lead">{{ object.description }}</p>
 
         {% autoescape off %}
             {{ object.text}}
         {% endautoescape %}
 
-        <p style="font-size: 22px"><strong>Date of publishing:</strong> {{ object.publishing_data }}</p>
-        <h2>Comments</h2>
-        {% for comment in post.comments_set.all %}
-            <hr> <a href="{% url 'user-detail' %}" >{{ comment.author.username }}:</a> {{ comment.comment }} - {{ comment.pub_data }}
-        {% endfor %}
-        <hr><p><a href="{% url 'blog:post-comments' post.pk %}">Add a new comment</a></p>
+
+        <hr>
+              <form method="post">{% csrf_token %}
+                <table>{{ form.as_table }}</table>
+                <input type="submit" value="Post">
+              </form>
+        <!-- Comments Form -->
+        <div class="card my-4">
+          <h5 class="card-header">Leave a Comment:</h5>
+
+          <div class="card-body">
+
+
+          </div>
+        </div>
+
+
+        <!-- Comment -->
+        <div class="media mb-4">
+          <div class="media-body">
+            {% for object in object_list%}
+            <hr><h5 class="mt-0"><a href="{% url 'user-detail' %}" >{{ object.author.username }}:</a> </h5> {{ object.comment }}
+            {%empty%}
+            <p>No comments</p>
+            {% endfor %}
+          </div>
+        </div>
+
+
+      {% if is_paginated %}
+          {% include "pagination.html" %}
+      {% endif %}
+
+      </div>
+    </div>
+    <!-- /.row -->
+  </div>
+  <!-- /.container -->
 {% endblock %}

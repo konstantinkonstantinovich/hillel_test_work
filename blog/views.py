@@ -5,7 +5,8 @@ from django.contrib.auth.views import LoginView
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, get_object_or_404
 from django.views.generic import CreateView, DetailView, UpdateView
-from django.views.generic.list import ListView
+from django.views.generic.list import ListView, MultipleObjectMixin
+from django.core.paginator import Paginator
 
 from .models import Post, Comments
 
@@ -77,8 +78,17 @@ class PostCreateView(LoginRequiredMixin, CreateView):
         return redirect(self.success_url)
 
 
-class PostDetailView(DetailView):
+class PostDetailView(DetailView, MultipleObjectMixin):
     model = Post
+    paginate_by = 2
+
+    def get_context_data(self, **kwargs):
+
+        object_list = Comments.objects.filter(post=self.get_object())
+        context = super(PostDetailView, self).get_context_data(object_list=object_list, **kwargs)
+        return context
+
+
 
 
 class PostListView(ListView):
@@ -96,6 +106,7 @@ class CommentsCreteViews(CreateView):
     model = Comments
     fields = ['comment']
     success_url = '/blog/'
+    template_name = 'blog/post_detail.html'
 
     def form_valid(self, form):
         form.instance.post = get_object_or_404(Post, pk=self.kwargs['pk'])
