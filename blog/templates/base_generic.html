@@ -10,11 +10,28 @@
 </head>
 <body>
     <div class="container-fluid">
+
+          {% if messages %}
+            <div class="row">
+                <div class="col-sm-12">
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible text-center" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                            <strong>{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Error{% else %}
+                                {{ message.tags|title }}{% endif %}!</strong> {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+
         <div class="row">
             <div class="col-sm-2">
             {% block sidebar %}
             <ul class="sidebar-nav">
                 <li><a href="{% url 'blog:post-list' %}">All posts</a></li>
+                <li><a href="{% url 'blog:contact' %}">Contact</a></li>
 
             </ul>
             <ul class="sidebar-nav">
