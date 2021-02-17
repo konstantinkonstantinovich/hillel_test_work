@@ -42,23 +42,28 @@
         {% endautoescape %}
 
         <!-- Comments Form -->
-
-
+<br>
+<br>
+<br>
+<h5>Comments:</h5>
+<hr>
         <!-- Comment -->
         <div class="media mb-4">
           <div class="media-body">
+
             {% for object in object_list%}
               {% if object.author.username == 'anon' %}
-                <hr> Anon: {{ object.comment }} - {{ object.pub_data }}
+                 Anon: {{ object.comment }} - {{ object.pub_data }}<hr>
             {% else %}
-                <hr> <a href="{% url 'user-comment' object.author.pk %}" >{{ object.author.username }}:</a> {{ object.comment }} - {{ object.pub_data }}
-            {% endif %}
+                 <a href="{% url 'user-comment' object.author.pk %}" >{{ object.author.username }}:</a> {{ object.comment }} - {{ object.pub_data }}
+                <hr>
+              {% endif %}
             {%empty%}
             <p>No comments</p>
             {% endfor %}
           </div>
         </div>
-       <hr><a href="{% url 'blog:post-comments' post.id %}"> Add a comment</a>
+      <a href="{% url 'blog:post-comments' post.id %}"> Add a comment</a>
 
 
       {% if is_paginated %}

@@ -2,7 +2,9 @@
 
 
 {% block content %}
-
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <h1>Local Blog Home</h1>
 
     <p>Welcome to <em>LocalBlog</em>, a very basic Django website developed as a tutorial example on the Mozilla Developer Network.</p>
@@ -14,14 +16,7 @@
     </ul>
 
   <h1>Post list</h1>
-<!------ Include the above in your HEAD tag ---------->
 
-
-
-
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 
 
@@ -34,23 +29,12 @@
       <h2><a href="{% url 'blog:post-detail' object.id %}">{{ object.title }}</a></h2>
       <h5><span class="glyphicon glyphicon-time"></span> Post by <a href="{% url 'user-detail' %}">{{ object.author }}</a>, {{ object.publishing_data }}  {{ object.comments_set.count }} comments</a></h5>
       <p>{{ object.description }}</p>
-
-
-
-
     </div>
-
   </div>
   {% empty %}
     <p>No post now.</p>
 {% endfor %}
 </div>
-
-
-<!------ Include the above in your HEAD tag ---------->
-
-
-
 {% load bootstrap4 %}
 {% bootstrap_pagination page_obj %}
 {% endblock %}
