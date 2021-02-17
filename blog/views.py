@@ -7,9 +7,11 @@ from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseRedirect, request
 from django.shortcuts import redirect, get_object_or_404, render
 from django.views.generic import CreateView, DetailView, UpdateView
-from django.views.generic.edit import FormView, ModelFormMixin
+from django.views.generic.edit import FormView
 from django.core.mail import BadHeaderError
 from django.views.generic.list import ListView, MultipleObjectMixin
+from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 
 from .models import Post, Comments
 
@@ -199,3 +201,20 @@ class ContactFormView(LoginRequiredMixin, FormView):
 def thanks(request):
     thanks = 'thanks'
     return render(request, 'blog/thanks.html', {'thanks': thanks})
+
+
+def change_password(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            messages.success(request, 'Your password was successfully updated!')
+            return redirect('blog:login')
+        else:
+            messages.error(request, 'Please correct the error below.')
+    else:
+        form = PasswordChangeForm(request.user)
+    return render(request, 'registration/password_change_form.html', {
+        'form': form
+    })
