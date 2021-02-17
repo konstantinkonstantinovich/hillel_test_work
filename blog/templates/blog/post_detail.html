@@ -17,8 +17,8 @@
         <p style="font-size: 22px"><strong>Date of publishing:</strong> {{ object.publishing_data }}</p>
         <h2>Comments</h2>
         {% for comment in post.comments_set.all %}
-            {% if comment.author.username == '' %}
-                <hr> <a href="{% url 'user-detail' %}" > Anon:</a> {{ comment.comment }} - {{ comment.pub_data }}
+            {% if comment.author.username == 'anon' %}
+                <hr> Anon: {{ comment.comment }} - {{ comment.pub_data }}
             {% else %}
                 <hr> <a href="{% url 'user-detail' %}" >{{ comment.author.username }}:</a> {{ comment.comment }} - {{ comment.pub_data }}
             {% endif %}

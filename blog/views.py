@@ -98,14 +98,15 @@ class CommentsCreteViews(CreateView):
     success_url = '/blog/'
 
     def form_valid(self, form):
-        a = self.request.user
-        print(a)
         form.instance.post = get_object_or_404(Post, pk=self.kwargs['pk'])
-        if self.request.user == AnonymousUser:
-            form.instance.author = User.objects.get()
-        else:
+        if self.request.user.is_authenticated:
             form.instance.author = self.request.user
-
+        else:
+            if User.objects.filter(username='anon').exists():
+                form.instance.author = User.objects.get(username='anon')
+            else:
+                User.objects.create(username='anon')
+                form.instance.author = User.objects.get(username='anon')
         return super(CommentsCreteViews, self).form_valid(form)
 
 
