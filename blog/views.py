@@ -3,11 +3,12 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
+from django.core.mail import send_mail
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, get_object_or_404, render
 from django.views.generic import CreateView, DetailView, UpdateView
 from django.views.generic.edit import FormView
-
+from django.core.mail import BadHeaderError
 from django.views.generic.list import ListView, MultipleObjectMixin
 
 from .models import Post, Comments
@@ -176,7 +177,17 @@ class ContactFormView(FormView):
     form_class = ContactForm
     template_name = 'blog/contact_form.html'
     success_url = '/blog/thanks'
-    fields = ['sender', 'message', 'subject']
+
+    def form_valid(self, form):
+        subject = form.cleaned_data['subject']
+        sender = form.cleaned_data['sender']
+        message = form.cleaned_data['message']
+        try:
+            send_mail(subject, message, sender, ['admin@example.com'])
+            messages.add_message(self.request, messages.SUCCESS, 'Message sent')
+        except BadHeaderError:
+            messages.add_message(self.request, messages.ERROR, 'Message not sent')
+        return redirect(self.success_url)
 
 
 def thanks(request):
