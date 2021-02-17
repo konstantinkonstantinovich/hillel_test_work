@@ -4,16 +4,16 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 from django.core.mail import send_mail
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, request
 from django.shortcuts import redirect, get_object_or_404, render
 from django.views.generic import CreateView, DetailView, UpdateView
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, ModelFormMixin
 from django.core.mail import BadHeaderError
 from django.views.generic.list import ListView, MultipleObjectMixin
 
 from .models import Post, Comments
 
-from .forms import ContactForm
+from .forms import ContactForm, PostModelForm
 
 # Create your views here.
 
@@ -65,7 +65,7 @@ class RegistrationForm(CreateView):
 
 class PostCreateView(LoginRequiredMixin, CreateView):
     model = Post
-    fields = ['title', 'text', 'description', 'image', 'status']
+    form_class = PostModelForm
     success_url = '/blog/'
 
     def form_valid(self, form):
@@ -111,7 +111,7 @@ class CommentsCreteViews(CreateView):
     model = Comments
     fields = ['comment']
     success_url = '/blog/'
-    template_name = 'blog/post_detail.html'
+    template_name = 'blog/comments_form.html'
 
     def form_valid(self, form):
         form.instance.post = get_object_or_404(Post, pk=self.kwargs['pk'])
@@ -146,6 +146,11 @@ class UserProfileView(LoginRequiredMixin, DetailView):
         return user
 
 
+class CommentUserProfileView(DetailView):
+    model = User
+    template_name = 'blog/comment_user_profile.html'
+
+
 class UserPostListView(LoginRequiredMixin, ListView):
     model = User
     paginate_by = 5
@@ -173,7 +178,7 @@ class BlanksUpdateForm(DetailView, UpdateView):
         return super(BlanksUpdateForm, self).form_valid(form)
 
 
-class ContactFormView(FormView):
+class ContactFormView(LoginRequiredMixin, FormView):
     form_class = ContactForm
     template_name = 'blog/contact_form.html'
     success_url = '/blog/thanks'
