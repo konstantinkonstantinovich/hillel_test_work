@@ -161,12 +161,9 @@ class UserPostListView(LoginRequiredMixin, ListView):
 
 
 class BlanksList(ListView):
-    model = User
+    model = Post
     template_name = "blog/blanks_list.html"
     paginate_by = 5
-
-    def get_queryset(self):
-        return super(BlanksList, self).get_queryset().filter(status=1)
 
 
 class BlanksUpdateForm(DetailView, UpdateView):
