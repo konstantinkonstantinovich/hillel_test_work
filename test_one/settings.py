@@ -41,7 +41,7 @@ INTERNAL_IPS = [
 
 INSTALLED_APPS = [
     'ckeditor',
-
+    'djipsum',
     'ckeditor_uploader',
     'django.contrib.admin',
     'django.contrib.auth',

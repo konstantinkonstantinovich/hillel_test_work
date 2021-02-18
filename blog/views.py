@@ -92,7 +92,6 @@ class PostDetailView(DetailView, MultipleObjectMixin):
     paginate_by = 2
 
     def get_context_data(self, **kwargs):
-
         object_list = Comments.objects.filter(post=self.get_object(), is_published=True)
         context = super(PostDetailView, self).get_context_data(object_list=object_list, **kwargs)
         return context
@@ -103,7 +102,7 @@ class PostListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return super(PostListView, self).get_queryset().filter(status=2).prefetch_related('comments_set')
+        return super(PostListView, self).get_queryset().filter(status=2)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
