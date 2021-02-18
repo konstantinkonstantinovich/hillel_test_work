@@ -70,7 +70,6 @@ class PostCreateView(LoginRequiredMixin, CreateView):
     form_class = PostModelForm
     success_url = '/blog/'
 
-
     def form_valid(self, form):
         status = form.cleaned_data['status']
         user = self.request.user
@@ -102,7 +101,10 @@ class PostDetailView(DetailView, MultipleObjectMixin):
 
 class PostListView(ListView):
     model = Post
-    paginate_by = 15
+    paginate_by = 10
+
+    def get_queryset(self):
+        return super(PostListView, self).get_queryset().filter(status=2)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -158,6 +160,7 @@ class UserPostListView(LoginRequiredMixin, ListView):
     model = User
     paginate_by = 5
     template_name = "blog/userpost_list.html"
+
 
 
 class BlanksList(ListView):
