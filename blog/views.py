@@ -163,6 +163,7 @@ class UserPostListView(LoginRequiredMixin, ListView):
 
 
 
+
 class BlanksList(ListView):
     model = Post
     template_name = "blog/blanks_list.html"
