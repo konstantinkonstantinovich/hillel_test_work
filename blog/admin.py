@@ -23,6 +23,6 @@ class PostModelAdmin(admin.ModelAdmin):
 
 @admin.register(Comments)
 class CommentsModelAdmin(admin.ModelAdmin):
-    list_display = ['comment', 'pub_data', 'post', 'author']
-    fields = ['comment', 'post', 'author']
+    list_display = ['comment', 'pub_data', 'post', 'author', 'is_published']
+    fields = ['comment', 'post', 'author', 'is_published']
     list_filter = ['author']
