@@ -1,25 +1,16 @@
 {% extends "base_generic.html" %}
 
-
 {% block content %}
-
 <h1>Local Blog Home</h1>
-
-    <p>Welcome to <em>LocalBlog</em>, a very basic Django website developed as a tutorial example on the Mozilla Developer Network.</p>
+<p>Welcome to <em>LocalBlog</em>, a very basic Django website developed as a tutorial example on the Mozilla Developer Network.</p>
   <h2>Dynamic content</h2>
-
   <p>The Blog has the following record users:</p>
     <ul>
         <li><strong>Users:</strong> {{ num_users }}</li>
     </ul>
-
   <h1>Post list</h1>
-
-
-
   <div class="container main-section border ">
     {% for object in object_list %}
-
     <div class="row">
       <div class="col-lg-12 col-sm-12 col-12">
         <div class="row">
@@ -33,7 +24,6 @@
             <p>
               {{ object.description }}
             </p>
-
           </div>
         </div>
         <div class="row post-detail">
@@ -45,17 +35,11 @@
                 <li class="list-inline-item">
                   <i class="fa fa-calendar" aria-hidden="true"></i> <span>{{ object.publishing_data }}</span>
                 </li>
-                <li class="list-inline-item">
-                  <i class="fa fa-comment" aria-hidden="true"></i> <span class="text-info">{{ object.comments_set.count }} Comments</span>
-                </li>
-
-
               </ul>
           </div>
         </div>
       </div>
     </div>
-
     <hr>
       {% empty %}
       <p>No post now.</p>

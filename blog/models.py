@@ -8,10 +8,9 @@ class Post(models.Model):
     class LoanStatus(models.IntegerChoices):
         BLANKS = 1, _('Blanks')
         IS_PUBLISHED = 2, _('Is_published')
-        NO_PUBLISHED = 3, _('No_published')
 
     status = models.PositiveSmallIntegerField(
-        choices=LoanStatus.choices, default=LoanStatus.NO_PUBLISHED, blank=True
+        choices=LoanStatus.choices, default=LoanStatus.BLANKS, blank=True
     )
     title = models.CharField(max_length=200)
     text = models.TextField(max_length=10000)
@@ -28,8 +27,7 @@ class Post(models.Model):
 class Comments(models.Model):
     comment = models.TextField(max_length=10000,
                                help_text="Input your comment.")
-    post = models.ForeignKey(Post,
-                             on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     pub_data = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     is_published = models.BooleanField(default=False)
