@@ -1,6 +1,7 @@
 {% extends "base_generic.html" %}
 {% load crispy_forms_filters %}
 {% load bootstrap4 %}
+{% load static %}
 
 {% block content %}
 	{% load crispy_forms_tags %}
@@ -28,11 +29,37 @@
 		    		<div class="col-6 my-auto">
 		    			<h2 class="font-weight-bold pt-4">Menu</h2>
                             <div class="navbar-nav">
-                                <a class="nav-item nav-link" href="{% url 'user-update' user.id %}">Update profile</a>
-                                <a class="nav-item nav-link" href="{% url 'blog:user-post' user.id %} ">Post List</a>
-                                <a class="nav-item nav-link" href="{% url 'blog:post-create' %}">Publish Post</a>
-                                <a class="nav-item nav-link" href="{% url 'blog:blanks-list' %}"> Blanks list</a>
-                                <a class="nav-item nav-link" href="{% url 'blog:change-password' %}">Change password</a>
+                                <div class="sidebar-section">
+                                    <nav class="navbar navbar-light bg-light">
+                                            <a class="navbar-brand" href="{% url 'user-update' user.id %}">
+                                                <img src="{% static 'img/images-1.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+                                                    Update Profile
+                                            </a>
+                                    </nav>
+                                    <nav class="navbar navbar-light bg-light">
+                                        <a class="navbar-brand" href="{% url 'blog:user-post' user.id %} ">
+                                            <img src="{% static 'img/download-1.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+                                                Post List
+                                        </a>
+                                    </nav>
+                                    <nav class="navbar navbar-light bg-light">
+                                        <a class="navbar-brand" href="{% url 'blog:post-create' %}">
+                                            <img src="{% static 'img/publish.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+                                                Publish Post
+                                        </a>
+                                    </nav>
+                                    <nav class="navbar navbar-light bg-light">
+                                        <a class="navbar-brand" href="{% url 'blog:blanks-list' %}">
+                                            <img src="{% static 'img/download.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+                                                Blanks list
+                                        </a>
+                                    </nav>
+                                    <nav class="navbar navbar-light bg-light">
+                                        <a class="navbar-brand" href="{% url 'blog:change-password' %}">
+                                            <img src="{% static 'img/change_password.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+                                                Change password
+                                        </a>
+                                    </nav>
                             </div>
 		    		</div>
 		    	</div>
@@ -50,5 +77,5 @@
 		    </div>
 	  	</div>
 	</div>
-
+    </div>
 {% endblock %}
