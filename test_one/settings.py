@@ -55,12 +55,6 @@ INSTALLED_APPS = [
     'crispy_forms',
 ]
 
-if DEBUG:
-    INSTALLED_APPS += [
-        'debug_toolbar',
-        'silk',
-    ]
-
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
@@ -72,12 +66,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
-
-if DEBUG:
-    MIDDLEWARE += [
-        'debug_toolbar.middleware.DebugToolbarMiddleware',
-        'silk.middleware.SilkyMiddleware',
-    ]
 
 ROOT_URLCONF = 'test_one.urls'
 
@@ -163,22 +151,7 @@ STATICFILES_DIRS = [
 ]
 
 
-# silk
-SILKY_PYTHON_PROFILER = True
-SILKY_AUTHORISATION = True
-# SILKY_PERMISSIONS = lambda user: user.is_superuse  # noqa: E731
-
 # Celery Configuration Options
-CELERY_DEBUG = False
-CELERY_TASK_TRACK_STARTED = True
-CELERY_TASK_TIME_LIMIT = 30 * 60
-CELERY_RESULT_BACKEND = 'django-db'
-CELERY_BROKER_URL = 'amqp://localhost'
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = TIME_ZONE
-
 
 CKEDITOR_UPLOAD_PATH = "uploads/"
 

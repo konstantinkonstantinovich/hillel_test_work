@@ -33,9 +33,5 @@ urlpatterns = [
     path('accounts/user/<int:pk>/', CommentUserProfileView.as_view(), name='user-comment'),
     path('accounts/user_update/<int:id>', UserProfileUpdateView.as_view(), name='user-update'),
     path('accounts/user/password_update/', change_password, name='change-password'),
-]
-if settings.DEBUG:
-    urlpatterns += [
-        path('__debug__/', include(debug_toolbar.urls)),
-        path('silk/', include('silk.urls', namespace='silk')),
-    ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
