@@ -54,12 +54,14 @@
           <div class="media-body">
 
             {% for object in object_list%}
-              {% if object.author.username == 'anon' %}
-                 Anon: {{ object.comment }} - {{ object.pub_data }}<hr>
-            {% else %}
-                 <a href="{% url 'user-comment' object.author.pk %}" >{{ object.author.username }}:</a> {{ object.comment }} - {{ object.pub_data }}
-                <hr>
-              {% endif %}
+                {% if object.is_published == 1 %}
+                    {% if object.author.username == 'anon' %}
+                        Anon: {{ object.comment }} - {{ object.pub_data }}<hr>
+                    {% else %}
+                        <a href="{% url 'user-comment' object.author.pk %}" >{{ object.author.username }}:</a> {{ object.comment }} - {{ object.pub_data }}
+                    <hr>
+                    {% endif %}
+                {% endif %}
             {%empty%}
             <p>No comments</p>
             {% endfor %}

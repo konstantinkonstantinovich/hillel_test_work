@@ -32,5 +32,5 @@ class Comments(models.Model):
                              on_delete=models.CASCADE)
     pub_data = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
-    
+    is_published = models.BooleanField(default=False)
 
