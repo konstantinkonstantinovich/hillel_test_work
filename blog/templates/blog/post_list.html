@@ -27,7 +27,7 @@
     <div class="col-sm-9">
       <hr>
       <h2><a href="{% url 'blog:post-detail' object.id %}">{{ object.title }}</a></h2>
-      <h5><span class="glyphicon glyphicon-time"></span> Post by <a href="{% url 'user-detail' %}">{{ object.author }}</a>, {{ object.publishing_data }}  {{ object.comments_set.count }} comments</a></h5>
+      <h5><span class="glyphicon glyphicon-time"></span> Post by <a href="{% url 'user-detail' %}">{{ object.author }}</a>, {{ object.publishing_data }}  {{ object.comments_set.count }} comments</h5>
       <p>{{ object.description }}</p>
     </div>
   </div>
