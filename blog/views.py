@@ -12,7 +12,6 @@ from django.core.mail import BadHeaderError
 from django.views.generic.list import ListView, MultipleObjectMixin
 from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.forms import PasswordChangeForm
-
 from .models import Post, Comments
 
 from .forms import ContactForm, PostModelForm
@@ -94,7 +93,7 @@ class PostDetailView(DetailView, MultipleObjectMixin):
 
     def get_context_data(self, **kwargs):
 
-        object_list = Comments.objects.filter(post=self.get_object())
+        object_list = Comments.objects.filter(post=self.get_object(), is_published=True)
         context = super(PostDetailView, self).get_context_data(object_list=object_list, **kwargs)
         return context
 
@@ -104,11 +103,12 @@ class PostListView(ListView):
     paginate_by = 10
 
     def get_queryset(self):
-        return super(PostListView, self).get_queryset().filter(status=2)
+        return super(PostListView, self).get_queryset().filter(status=2).prefetch_related('comments_set')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['num_users'] = User.objects.count()
+
         return context
 
 
@@ -152,20 +152,17 @@ class UserProfileView(LoginRequiredMixin, DetailView):
 
 
 class CommentUserProfileView(DetailView):
-    model = User
+    model = Post
     template_name = 'blog/comment_user_profile.html'
 
 
 class UserPostListView(LoginRequiredMixin, ListView):
     model = User
-    paginate_by = 5
     template_name = "blog/userpost_list.html"
 
 
-
-
 class BlanksList(ListView):
-    model = Post
+    model = User
     template_name = "blog/blanks_list.html"
     paginate_by = 5
 
