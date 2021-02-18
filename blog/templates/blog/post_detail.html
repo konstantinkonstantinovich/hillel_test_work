@@ -2,71 +2,73 @@
 
 {% block content %}
   <!-- Page Content -->
-  <div class="container">
-
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <div class="container pb50">
     <div class="row">
-
-      <!-- Post Content Column -->
-      <div class="col-lg-8">
-
-        <!-- Title -->
-        <h1 class="mt-4">{{ object.title }}</h1>
-
-        <!-- Author -->
-        <p class="lead">
-          by
-          <a href="{% url 'user-comment' object.author.pk %}">{{object.author}}</a>
-        </p>
-
-        <hr>
-
-        <!-- Date/Time -->
-        <p>Posted on {{ object.publishing_data }}</p>
-
-        <hr>
-
-        <!-- Preview Image -->
-        {% if object.image %}
+      <div class="col-md-9 mb40">
+        <article>
             <img class="img-fluid rounded" src="{{ object.image.url }}" alt="connect" style="max-height:300px">
-        <hr>
-        {% endif %}
-
-
-
-
-        <!-- Post Content -->
-        <p class="lead">{{ object.description }}</p>
-
-        {% autoescape off %}
-            {{ object.text}}
-        {% endautoescape %}
-
-        <!-- Comments Form -->
-
-<br>
-<br>
-<br>
-<h5>Comments:</h5>
-<hr>
-
-        <!-- Comment -->
-        <div class="media mb-4">
-          <div class="media-body">
-
-            {% for object in object_list%}
-                {% if object.is_published == 1 %}
-                    {% if object.author.username == 'anon' %}
-                        Anon: {{ object.comment }} - {{ object.pub_data }}<hr>
-                    {% else %}
-                        <a href="{% url 'user-comment' object.author.pk %}" >{{ object.author.username }}:</a> {{ object.comment }} - {{ object.pub_data }}
-                    <hr>
-                    {% endif %}
-                {% endif %}
-            {%empty%}
-            <p>No comments</p>
-            {% endfor %}
-          </div>
-        </div>
+            <div class="post-content">
+                <h3 class="mt-4">{{ object.title }}</h3>
+                <ul class="post-meta list-inline">
+                    <li class="list-inline-item">
+                        <i class="fa fa-user-circle-o"></i> <a href="{% url 'user-comment' object.author.pk %}">{{object.author}}</a>
+                    </li>
+                    <li class="list-inline-item">
+                        <i class="fa fa-calendar-o"></i> <a href="#"> {{ object.publishing_data }}</a>
+                    </li>
+                    <li class="list-inline-item">
+                        <i class="fa fa-tags"></i> <a href="#">Bootstrap4</a>
+                    </li>
+                </ul>
+                <p class="lead">{{ object.description }}</p>
+                <p> {{ object.text}}</p>
+                <ul class="list-inline share-buttons">
+                    <li class="list-inline-item">Share Post:</li>
+                    <li class="list-inline-item">
+                        <a href="#" class="social-icon-sm si-dark si-colored-facebook si-gray-round">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#" class="social-icon-sm si-dark si-colored-twitter si-gray-round">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a href="#" class="social-icon-sm si-dark si-colored-linkedin si-gray-round">
+                            <i class="fa fa-linkedin"></i>
+                        </a>
+                    </li>
+                </ul>
+                <hr class="mb40">
+                <h4 class="mb40 text-uppercase font500">Comments</h4>
+                    {% for object in object_list%}
+                        {% if object.is_published == 1 %}
+                            {% if object.author.username == 'anon' %}
+                                <div class="media mb40">
+                                    <i class="d-flex mr-3 fa fa-user-circle-o fa-3x"></i>
+                                    <div class="media-body">
+                                        <h5 class="mt-0 font400 clearfix">Anon </h5>{{ object.comment }} - {{ object.pub_data }}
+                                        <hr>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="media mb40">
+                                    <i class="d-flex mr-3 fa fa-user-circle-o fa-3x"></i>
+                                    <div class="media-body">
+                                        <h5 class="mt-0 font400 clearfix"><a href="{% url 'user-comment' object.author.pk %}" >{{ object.author.username }}:</a></h5>{{ object.comment }} - {{ object.pub_data }}
+                                        <hr>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+            </div>
+        </article>
+      </div>
+    </div>
+  </div>
       <a href="{% url 'blog:post-comments' post.id %}"> Add a comment</a>
 
 
