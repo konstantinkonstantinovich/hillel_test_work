@@ -151,7 +151,7 @@ class UserProfileView(LoginRequiredMixin, DetailView):
 
 
 class CommentUserProfileView(DetailView):
-    model = Post
+    model = User
     template_name = 'blog/comment_user_profile.html'
 
 
