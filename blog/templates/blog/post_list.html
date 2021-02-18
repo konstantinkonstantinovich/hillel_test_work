@@ -2,9 +2,7 @@
 
 
 {% block content %}
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 <h1>Local Blog Home</h1>
 
     <p>Welcome to <em>LocalBlog</em>, a very basic Django website developed as a tutorial example on the Mozilla Developer Network.</p>
@@ -19,22 +17,56 @@
 
 
 
+  <div class="container main-section border ">
+    {% for object in object_list %}
 
-<div class="container-fluid">
-  {% for object in object_list %}
-  <div class="row content">
+    <div class="row">
+      <div class="col-lg-12 col-sm-12 col-12">
+        <div class="row">
+          {% if object.image %}
+          <div class="col-lg-2 col-sm-2 col-5">
+              <img  src="{{ object.image.url }}" alt="connect" class="img-thumbnail" width="150px" style="max-height:300px">
+          </div>
+          {% endif %}
+          <div class="col-lg-10 col-sm-10 col-7">
+            <h4 class="text-primary"><a href="{% url 'blog:post-detail' object.id %}">{{ object.title }}</a></h4>
+            <p>
+              {{ object.description }}
+            </p>
 
-    <div class="col-sm-9">
-      <hr>
-      <h2><a href="{% url 'blog:post-detail' object.id %}">{{ object.title }}</a></h2>
-      <h5><span class="glyphicon glyphicon-time"></span> Post by <a href="{% url 'user-detail' %}">{{ object.author }}</a>, {{ object.publishing_data }}  {{ object.comments_set.count }} comments</h5>
-      <p>{{ object.description }}</p>
+          </div>
+        </div>
+        <div class="row post-detail">
+          <div class="col-lg-12 col-sm-12 col-12">
+              <ul class="list-inline">
+                <li class="list-inline-item">
+                   <span>by</span> <span class="text-info"><a href="{% url 'user-detail' %}">{{ object.author }}</a></span>
+                </li>
+                <li class="list-inline-item">
+                  <i class="fa fa-calendar" aria-hidden="true"></i> <span>{{ object.publishing_data }}</span>
+                </li>
+                <li class="list-inline-item">
+                  <i class="fa fa-comment" aria-hidden="true"></i> <span class="text-info">{{ object.comments_set.count }} Comments</span>
+                </li>
+
+
+              </ul>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <hr>
+      {% empty %}
+      <p>No post now.</p>
+  {% endfor %}
+    {% load bootstrap4 %}
+    <div style="margin-left: 45%" class="text-center">
+  {% bootstrap_pagination page_obj %}
+      </div>
   </div>
-  {% empty %}
-    <p>No post now.</p>
-{% endfor %}
-</div>
-{% load bootstrap4 %}
-{% bootstrap_pagination page_obj %}
+
+
+
+
 {% endblock %}
